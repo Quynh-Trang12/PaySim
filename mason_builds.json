@@ -1,0 +1,30 @@
+{
+  "com.github.eclab": {
+    "mason": {
+      "788e67b6bd": "Error",
+      "f86d1a3": "Error",
+      "f86d1a30eba2c863d207b8823079042913b55742": "Error",
+      "maved-374517f9ef-1": "ok",
+      "0663315": "ok",
+      "master-dd322c8e7e-1": "ok",
+      "-dd322c8e7e-1": "ok",
+      "3059783c0c": "ok",
+      "20": "Error",
+      "v20": "Error",
+      "master-23e9cdedbe-1": "Error",
+      "23e9cdedbe": "Error",
+      "-b6ff8e0e04-1": "ok",
+      "-f1179797e3-1": "ok",
+      "master-c0d2142c6f-1": "ok",
+      "mason-build": "gitError",
+      "mason": "gitError",
+      "master-SNAPSHOT": "gitError",
+      "8663315": "gitError",
+      "master-98d1900b08-1": "ok",
+      "master-2d21d2b825-1": "ok",
+      "master-13e328f53a-1": "ok",
+      "0663315bd4b19ee59053dce5327d804521c31710": "ok",
+      "master": "ok"
+    }
+  }
+}
