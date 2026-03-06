@@ -12,7 +12,8 @@ import org.paysim.paysim.utils.CSVReader;
 import org.paysim.paysim.utils.RandomCollection;
 
 public class ClientsProfiles {
-    private static final int COLUMN_ACTION = 0, COLUMN_LOW = 1, COLUMN_HIGH = 2, COLUMN_AVG = 3, COLUMN_STD = 4, COLUMN_FREQ = 5;
+    private static final int COLUMN_ACTION = 0, COLUMN_LOW = 1, COLUMN_HIGH = 2, COLUMN_AVG = 3, COLUMN_STD = 4,
+            COLUMN_FREQ = 5;
     private Map<String, RandomCollection<ClientActionProfile>> profilePickerPerAction = new HashMap<>();
 
     public ClientsProfiles(String filename) {
@@ -24,7 +25,8 @@ public class ClientsProfiles {
 
         for (String[] profileString : parameters) {
             if (ActionTypes.isValidAction(profileString[COLUMN_ACTION])) {
-                RandomCollection<ClientActionProfile> profilePicker = profilePickerPerAction.get(profileString[COLUMN_ACTION]);
+                RandomCollection<ClientActionProfile> profilePicker = profilePickerPerAction
+                        .get(profileString[COLUMN_ACTION]);
                 ClientActionProfile clientActionProfile = new ClientActionProfile(profileString[COLUMN_ACTION],
                         Integer.parseInt(profileString[COLUMN_LOW]),
                         Integer.parseInt(profileString[COLUMN_HIGH]),
@@ -34,8 +36,8 @@ public class ClientsProfiles {
             }
         }
 
-        for (RandomCollection profile: profilePickerPerAction.values()) {
-            if (profile.isEmpty()){
+        for (RandomCollection<ClientActionProfile> profile : profilePickerPerAction.values()) {
+            if (profile.isEmpty()) {
                 System.out.println("Warning : Missing action in " + filename);
                 break;
             }
@@ -50,8 +52,8 @@ public class ClientsProfiles {
         return profilePickerPerAction.get(action).next();
     }
 
-    public void setRandom(MersenneTwisterFast random){
-        for (RandomCollection profilePicker : profilePickerPerAction.values()){
+    public void setRandom(MersenneTwisterFast random) {
+        for (RandomCollection<ClientActionProfile> profilePicker : profilePickerPerAction.values()) {
             profilePicker.setRandom(random);
         }
     }

@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 
-
 public class DatabaseHandler {
 
     private Connection con = null;
@@ -55,7 +54,7 @@ public class DatabaseHandler {
         try {
             this.con.close();
         } catch (SQLException e) {
-            // TODO Auto-generated catch block
+            System.err.println("Error closing connection: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -67,7 +66,7 @@ class DBase {
     }
 
     public Connection connect(String db_connect_str, String db_userid,
-                              String db_password) {
+            String db_password) {
         Connection conn;
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();

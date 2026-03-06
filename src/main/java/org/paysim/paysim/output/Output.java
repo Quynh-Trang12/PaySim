@@ -23,7 +23,7 @@ public class Output {
             filenameStepAggregate, filenameClientProfiles, filenameFraudsters;
 
     public static void incrementalWriteRawLog(int step, ArrayList<Transaction> transactions) {
-        String rawLogHeader = "step,action,amount,nameOrig,oldBalanceOrig,newBalanceOrig,nameDest,oldBalanceDest,newBalanceDest,isFraud,isFlaggedFraud,isUnauthorizedOverdraft";
+        String rawLogHeader = "step,type,amount,nameOrig,oldbalanceOrg,newbalanceOrig,nameDest,oldbalanceDest,newbalanceDest,isFraud,isFlaggedFraud";
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(filenameRawLog, true));
             if (step == 0) {
@@ -60,7 +60,6 @@ public class Output {
 
     }
 
-
     public static void writeFraudsters(ArrayList<Fraudster> fraudsters) {
         String fraudsterHeader = "name,nbVictims,profit";
         try {
@@ -87,22 +86,25 @@ public class Output {
         }
     }
 
-    public static void writeClientsProfiles(Map<ClientActionProfile, Integer> countPerClientActionProfile, int numberClients) {
+    public static void writeClientsProfiles(Map<ClientActionProfile, Integer> countPerClientActionProfile,
+            int numberClients) {
         String clientsProfilesHeader = "action,high,low,total,freq";
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(filenameClientProfiles));
             writer.write(clientsProfilesHeader);
             writer.newLine();
 
-            for (Map.Entry<ClientActionProfile, Integer> counterActionProfile : countPerClientActionProfile.entrySet()) {
+            for (Map.Entry<ClientActionProfile, Integer> counterActionProfile : countPerClientActionProfile
+                    .entrySet()) {
                 ClientActionProfile clientActionProfile = counterActionProfile.getKey();
                 String action = clientActionProfile.getAction();
                 int count = counterActionProfile.getValue();
 
                 double probability = ((double) count) / numberClients;
 
-                writer.write(action + "," + clientActionProfile.getMinCount() + "," + clientActionProfile.getMaxCount() + ","
-                        + count + "," + fastFormatDouble(5, probability));
+                writer.write(
+                        action + "," + clientActionProfile.getMinCount() + "," + clientActionProfile.getMaxCount() + ","
+                                + count + "," + fastFormatDouble(5, probability));
                 writer.newLine();
             }
             writer.close();
@@ -113,8 +115,10 @@ public class Output {
 
     public static void writeSummarySimulation(PaySim paySim) {
         StringBuilder errorSummary = new StringBuilder();
-        StepsProfiles simulationStepsProfiles = new StepsProfiles(Output.filenameStepAggregate, 1 / Parameters.multiplier, Parameters.nbSteps);
-        double totalErrorRate = SummaryBuilder.buildSummary(Parameters.stepsProfiles, simulationStepsProfiles, errorSummary);
+        StepsProfiles simulationStepsProfiles = new StepsProfiles(Output.filenameStepAggregate,
+                1 / Parameters.multiplier, Parameters.nbSteps);
+        double totalErrorRate = SummaryBuilder.buildSummary(Parameters.stepsProfiles, simulationStepsProfiles,
+                errorSummary);
 
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(Output.filenameSummary));
@@ -128,7 +132,8 @@ public class Output {
                 paySim.getClients().size() + "," + totalErrorRate;
         writeGlobalSummary(summary);
 
-        System.out.println("Nb of clients: " + paySim.getClients().size() + " - Nb of steps with transactions: " + paySim.getStepParticipated());
+        System.out.println("Nb of clients: " + paySim.getClients().size() + " - Nb of steps with transactions: "
+                + paySim.getStepParticipated());
     }
 
     private static void writeGlobalSummary(String summary) {
@@ -151,15 +156,15 @@ public class Output {
     }
 
     public static void writeDatabaseLog(String dbUrl, String dbUser, String dbPassword,
-                                        ArrayList<Transaction> transactions, String simulatorName) {
+            ArrayList<Transaction> transactions, String simulatorName) {
         DatabaseHandler handler = new DatabaseHandler(dbUrl, dbUser, dbPassword);
         for (Transaction t : transactions) {
             handler.insert(simulatorName, t);
         }
     }
 
-    //See https://stackoverflow.com/a/10554128
-    private static final int[] POW10 = {1, 10, 100, 1000, 10000, 100000, 1000000};
+    // See https://stackoverflow.com/a/10554128
+    private static final int[] POW10 = { 1, 10, 100, 1000, 10000, 100000, 1000000 };
 
     public static String fastFormatDouble(int precision, double val) {
         StringBuilder sb = new StringBuilder();

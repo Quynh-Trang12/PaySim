@@ -22,7 +22,7 @@ public class Transaction implements Serializable {
     private boolean isUnauthorizedOverdraft = false;
 
     public Transaction(int step, String action, double amount, String nameOrig, double oldBalanceOrig,
-                       double newBalanceOrig, String nameDest, double oldBalanceDest, double newBalanceDest) {
+            double newBalanceOrig, String nameDest, double oldBalanceDest, double newBalanceDest) {
         this.step = step;
         this.action = action;
         this.amount = amount;
@@ -34,7 +34,7 @@ public class Transaction implements Serializable {
         this.newBalanceDest = newBalanceDest;
     }
 
-    public boolean isFailedTransaction(){
+    public boolean isFailedTransaction() {
         return isFlaggedFraud || isUnauthorizedOverdraft;
     }
 
@@ -95,7 +95,7 @@ public class Transaction implements Serializable {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         ArrayList<String> properties = new ArrayList<>();
 
         properties.add(String.valueOf(step));
@@ -109,7 +109,7 @@ public class Transaction implements Serializable {
         properties.add(Output.fastFormatDouble(Output.PRECISION_OUTPUT, newBalanceDest));
         properties.add(Output.formatBoolean(isFraud));
         properties.add(Output.formatBoolean(isFlaggedFraud));
-        properties.add(Output.formatBoolean(isUnauthorizedOverdraft));
+        // properties.add(Output.formatBoolean(isUnauthorizedOverdraft));
 
         return String.join(Output.OUTPUT_SEPARATOR, properties);
     }

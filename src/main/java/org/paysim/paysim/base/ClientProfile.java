@@ -37,7 +37,7 @@ public class ClientProfile {
             targetCountAction = actionProfile.getMinCount() + random.nextInt(rangeSize);
         }
 
-        //TODO: check if this is really mandatory
+        // The maximum count bounds the target count action.
         int maxCountAction = ActionTypes.getMaxOccurrenceGivenAction(actionProfile.getAction());
         if (targetCountAction > maxCountAction) {
             targetCountAction = maxCountAction;
@@ -50,8 +50,7 @@ public class ClientProfile {
         actionProbability = targetCount.entrySet()
                 .stream().collect(Collectors.toMap(
                         Map.Entry::getKey,
-                        c -> ((double) c.getValue()) / clientTargetCount)
-                );
+                        c -> ((double) c.getValue()) / clientTargetCount));
     }
 
     public Map<String, Double> getActionProbability() {

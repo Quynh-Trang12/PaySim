@@ -22,24 +22,23 @@ public class DrugDealer extends Client {
 
         super.step(state);
 
-        if (wantsToCashOutProfit()) {
-            double amount = pickAmountCashOutProfit();
+        if (wantsToCashOutProfit(paySim)) {
+            double amount = pickAmountCashOutProfit(paySim);
             super.handleCashOut(paySim, step, amount);
             drugMoneyInAccount -= amount;
         }
     }
 
-    private boolean wantsToCashOutProfit(){
-        //TODO: implement a randomized version
-        return drugMoneyInAccount > thresholdForCashOut;
+    private boolean wantsToCashOutProfit(PaySim paySim) {
+        return drugMoneyInAccount > thresholdForCashOut && paySim.random.nextBoolean(0.5);
     }
 
-    private double pickAmountCashOutProfit(){
-        //TODO: implement a randomized version
-        return thresholdForCashOut;
+    private double pickAmountCashOutProfit(PaySim paySim) {
+        double fraction = 0.8 + 0.2 * paySim.random.nextDouble();
+        return thresholdForCashOut * fraction;
     }
 
-    protected void addMoneyFromDrug(double amount){
+    protected void addMoneyFromDrug(double amount) {
         drugMoneyInAccount += amount;
     }
 }
